@@ -7,3 +7,7 @@
 
 ```bash
 sudo bash -c "$(curl -Lfo- https://raw.githubusercontent.com/m-mjd/hcc/main/optimizer.sh)"
+
+<br>
+<br>
+حتما star بدهید در صورت رضایت
