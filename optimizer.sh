@@ -16,7 +16,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 action=${action:-install}
-
+echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n'
 read -p "Do you want to install or uninstall the cron job? (install/uninstall) [default: install]: " user_action
 action=${user_action:-$action}
 
