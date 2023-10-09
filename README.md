@@ -10,4 +10,5 @@ sudo bash -c "$(curl -Lfo- https://raw.githubusercontent.com/m-mjd/hcc/main/opti
 ```
 <br>
 <br>
-حتما star بدهید در صورت رضایت
+# حتما در صورت رضایت star بدهید.
+با تشکر
