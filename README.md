@@ -4,7 +4,7 @@
 ### نصب :
 
 ```sh
-wget https://github.com/m-mjd/hcc/raw/main/install.sh -O - | bash
+wget https://github.com/m-mjd/hcc/raw/main/optimizer.sh -O - | bash
 ```
 
 <hr>
