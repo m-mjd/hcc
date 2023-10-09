@@ -4,15 +4,18 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 RESET='\033[0m'
-cat << "EOF"
-${YELLOW}"
- ||''''|                  .
- ||  .    ....    ....  .||.    ....  ... ..
- ||''|   '' .||  ||. '   ||   .|...||  ||' ''
- ||      .|' ||  . '|..  ||   ||       ||
-.||.     '|..'|' |'..|'  '|.'  '|...' .||."
-${RESET}
-EOF
+ascii_art=(
+"${YELLOW}||''''|                  ."
+" ||  .    ....    ....  .||.    ....  ... .."
+" ||''|   '' .||  ||. '   ||   .|...||  ||' ''"
+" ||      .|' ||  . '|..  ||   ||       ||"
+".||.     '|..'|' |'..|'  '|.'  '|...' .||.${RESET}"
+)
+
+for line in "${ascii_art[@]}"; do
+    echo -e "$line"
+done
+
 if [[ $EUID -ne 0 ]]; then
     echo -e "${RED}This script must be run with the superuser. Please login with root user.${RESET}"
     exit 1
