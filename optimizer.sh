@@ -53,7 +53,18 @@ case "$action" in
         fi
         ;;
     install)
-    
+        if crontab -l | grep -q "$cron_command"; then
+            (crontab -l | grep -v "$cron_command") | crontab -
+            echo -e "${GREEN}The command has been successfully removed from cron job.${RESET}"
+        else
+            echo -e "${YELLOW}The command was not found in the cron job.${RESET}"
+        fi
+        if crontab -l | grep -q "$cron_command2"; then
+            (crontab -l | grep -v "$cron_command2") | crontab -
+            echo -e "${GREEN}The command has been successfully removed from cron job.${RESET}"
+        else
+            echo -e "${YELLOW}The command was not found in the cron job.${RESET}"
+        fi
         echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n'
         bash /opt/hiddify-config/apply_configs.sh
         clear
