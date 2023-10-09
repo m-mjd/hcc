@@ -32,9 +32,9 @@ if [[ $action == install ]]; then
         echo -e "${RED}Invalid input. Please enter a positive integer for the time.${RESET}"
         exit 1
     fi
-
-    cron_command="*/$time * * * * echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'"
-    cron_command2="*/$time * * * * bash /opt/hiddify-config/apply_configs.sh"
+    time1=($time*60)
+    cron_command="*/$time1 * * * * echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'"
+    cron_command2="*/$time1 * * * * bash /opt/hiddify-config/apply_configs.sh"
 fi
 
 case "$action" in
