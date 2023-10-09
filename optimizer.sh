@@ -15,8 +15,22 @@ if [[ $EUID -ne 0 ]]; then
     echo -e "${RED}This script must be run with the superuser. Please login with root user.${RESET}"
     exit 1
 fi
-read -p "Do you want to install or uninstall the cron job? (install/uninstall): " action
-cron_command="*/2 * * * * echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'"
+action=${action:-install}
+
+read -p "Do you want to install or uninstall the cron job? (install/uninstall) [default: install]: " user_action
+action=${user_action:-$action}
+
+if [[ $action == install ]]; then
+   read -p "Enter the interval in hours to empty the cache (press Enter for default 2 hours): " time
+   time=${time:-2}
+   if [[ ! $time =~ ^[1-9][0-9]*$ ]]; then
+       echo -e "${RED}Invalid input. Please enter a positive integer for the time.${RESET}"
+       exit 1
+   fi
+
+   cron_command="*/$time * * * * echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'"
+fi
+
 case "$action" in
     uninstall)
         if crontab -l | grep -q "$cron_command"; then
