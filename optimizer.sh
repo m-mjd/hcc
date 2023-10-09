@@ -20,7 +20,8 @@ if [[ $EUID -ne 0 ]]; then
     echo -e "${RED}This script must be run with the superuser. Please login with root user.${RESET}"
     exit 1
 fi
-
+cd /
+mkdir /backup-cronjob
 action=${action:-install}
 read -p "Do you want to install or uninstall the cron job? (install/uninstall) [default: install]: " user_action
 action=${user_action:-$action}
@@ -39,6 +40,8 @@ fi
 
 case "$action" in
     uninstall)
+        backup_file="/backup-cronjob/crontab_backup_$(date +\%Y\%m\%d_\%H\%M\%S)"
+        crontab -l > "$backup_file"
         if crontab -l | grep -q "$cron_command"; then
             (crontab -l | grep -v "$cron_command") | crontab -
             echo -e "${GREEN}The command has been successfully removed from cron job.${RESET}"
@@ -53,18 +56,9 @@ case "$action" in
         fi
         ;;
     install)
-        if crontab -l | grep -q "$cron_command"; then
-            (crontab -l | grep -v "$cron_command") | crontab -
-            echo -e "${GREEN}The command has been successfully removed from cron job.${RESET}"
-        else
-            echo -e "${YELLOW}The command was not found in the cron job.${RESET}"
-        fi
-        if crontab -l | grep -q "$cron_command2"; then
-            (crontab -l | grep -v "$cron_command2") | crontab -
-            echo -e "${GREEN}The command has been successfully removed from cron job.${RESET}"
-        else
-            echo -e "${YELLOW}The command was not found in the cron job.${RESET}"
-        fi
+        backup_file="/backup-cronjob/crontab_backup_$(date +\%Y\%m\%d_\%H\%M\%S)"
+        crontab -l > "$backup_file"
+        crontab -r
         echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n'
         bash /opt/hiddify-config/apply_configs.sh
         clear
