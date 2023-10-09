@@ -26,8 +26,8 @@ read -p "Do you want to install or uninstall the cron job? (install/uninstall) [
 action=${user_action:-$action}
 
 if [[ $action == install ]]; then
-    read -p "Enter the interval in hours to empty the cache (press Enter for default 2 hours): " time
-    time=${time:-2}
+    read -p "Enter the interval in hours to empty the cache (press Enter for default 4 hours): " time
+    time=${time:-4}
     if [[ ! $time =~ ^[1-9][0-9]*$ ]]; then
         echo -e "${RED}Invalid input. Please enter a positive integer for the time.${RESET}"
         exit 1
